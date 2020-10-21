@@ -4,41 +4,48 @@ import Rectangle from './components/Rectangle';
 import Tooltip from './components/Tooltip';
 
 const App = () => {
-  let inputs = [12, 13, 8, 30, 11, 23, 35, 13, 9, 17, 20, 28];
+  let inputs = [12, 13, 8, 30, 11, 23, 35,];
   let months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jly', 'aug', 'sep', 'oct', 'nov', 'dec'];
   let topValue = Math.max(...inputs);
+  let graphWidth = 400;
+  let graphHeight = 400;
+  let padding = graphWidth / 25;
+  let xScale = (graphWidth - 2 * padding) / inputs.length;
+  let yScale = (graphHeight - 2 * padding) / Math.floor(topValue);
+
   let stageRef = useRef();
 
   let initialValues = {
     graphCoordX: 0,
     graphCoordY: 0,
-    graphWidth: window.innerWidth,
-    graphHeight: window.innerHeight,
+    graphWidth,
+    graphHeight,
+    padding,
     backgroundColor: "yellow",
     line: {
-      x: 200,
-      y: 500,
+      x: padding + 20,
+      y: graphHeight - padding,
       stroke: "black"
     },
     vertArrow: {
-      linePoints: [0, 0, 0, topValue * -10 - 80],
+      linePoints: [0, 0, 0, -topValue * yScale - padding],
       desc: "Months of a year --->",
-      fontSize: 15,
-      xAxis: 400,
-      yAxis: 550,
+      fontSize: (graphWidth > 300 ? 15 : 12),
+      xAxis: graphWidth / 3,
+      yAxis: graphHeight,
       label: null
     },
     horiArrow: {
-      linePoints: [0, 0, 200 + inputs.length * 28, 0],
+      linePoints: [0, 0, graphWidth - padding / 4, 0],
       desc: "Expenditure per month  --->",
-      fontSize: 15,
-      xAxis: 150,
-      yAxis: 350,
+      fontSize: (graphHeight > 300 ? 15 : 12),
+      xAxis: 0,
+      yAxis: (graphWidth > 300 ? graphHeight / 1.7 : graphHeight / 1.3),
       direction: -90,
       label: months
     },
     dataSet: inputs,
-    topValue: Math.max(...inputs),
+    topValue,
     toolTip: {
       active: false,
       x: null,
@@ -83,8 +90,11 @@ const App = () => {
   return (
     <Stage width={window.innerWidth} height={window.innerHeight} ref={stageRef} >
       <Layer class="graphLayer">
-        <Group draggable height={chartDetails.graphHeight} width={chartDetails.graphWidth} x={chartDetails.graphCoordX} y={chartDetails.graphCoordY} >
-          <Rectangle inputs={chartDetails.dataSet} months={chartDetails.horiArrow.label} onMouseOver={onMouseOver} onMouseOut={onMouseOut} />
+        <Group draggable height={chartDetails.graphHeight} width={chartDetails.graphWidth} x={chartDetails.graphCoordX} y={chartDetails.graphCoordY} onDragStart={onMouseOut}>
+          <Rectangle graphWidth={chartDetails.graphWidth} graphHeight={chartDetails.graphHeight}
+            padding={chartDetails.padding} inputs={chartDetails.dataSet} topValue={topValue} xScale={xScale} yScale={yScale}
+            months={chartDetails.horiArrow.label} onMouseOver={onMouseOver}
+            onMouseOut={onMouseOut} />
           <Arrow
             x={chartDetails.line.x}
             y={chartDetails.line.y}
@@ -98,7 +108,7 @@ const App = () => {
             stroke={chartDetails.line.stroke}
           />
           <Text text={chartDetails.horiArrow.desc} fontSize={chartDetails.horiArrow.fontSize} x={chartDetails.horiArrow.xAxis} y={chartDetails.horiArrow.yAxis} rotation={chartDetails.horiArrow.direction} />
-          <Text text={chartDetails.vertArrow.desc} fontSize={chartDetails.vertArrow.fontSize} x={chartDetails.vertArrow.xAxis} y={chartDetails.vertArrow.yAxis} />
+          <Text text={chartDetails.vertArrow.desc} fontSize={chartDetails.vertArrow.fontSize} x={chartDetails.vertArrow.xAxis} y={chartDetails.vertArrow.yAxis} align="center" />
         </Group>
         {chartDetails.toolTip.active && <Tooltip x={chartDetails.toolTip.x} y={chartDetails.toolTip.y} msg={chartDetails.toolTip.msg} />}
       </Layer>
