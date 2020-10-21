@@ -4,7 +4,7 @@ import Rectangle from './components/Rectangle';
 import Tooltip from './components/Tooltip';
 
 const App = () => {
-  let inputs = [12, 13, 8, 30, 11, 23, 35,];
+  let inputs = [12, 13, 8, 30, 11, 23, 35, 13, 9, 17, 20, 28];
   let months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jly', 'aug', 'sep', 'oct', 'nov', 'dec'];
   let topValue = Math.max(...inputs);
   let graphWidth = 400;
