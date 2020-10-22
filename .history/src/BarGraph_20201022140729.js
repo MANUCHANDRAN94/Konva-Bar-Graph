@@ -7,7 +7,7 @@ import Tooltip from "./components/Tooltip";
 const App = ({ shapeProps, isSelected, onSelect, onChange }) => {
   // ! These values should be passed as props
   /* -------------------------------------------------------------------------- */
-  let inputs = [12, 13, 8, 30, 20, 28];
+  let inputs = [12, 13, 8, 30, 11, 23, 35, 13, 9, 17, 20, 28];
   let months = [
     "jan",
     "feb",
@@ -57,7 +57,7 @@ const App = ({ shapeProps, isSelected, onSelect, onChange }) => {
     horiArrow: {
       linePoints: [0, 0, graphWidth - padding / 4, 0],
       desc: "Expenditure per month  --->",
-      fontSize: graphHeight > 300 ? 13 : 10,
+      fontSize: graphHeight > 300 ? 15 : 12,
       xAxis: 0,
       yAxis: graphWidth > 300 ? graphHeight / 1.7 : graphHeight / 1.3,
       direction: -90,
@@ -87,14 +87,7 @@ const App = ({ shapeProps, isSelected, onSelect, onChange }) => {
       trRef.current.setNode(shapeRef.current);
       trRef.current.getLayer().batchDraw();
     }
-    setChartDetails(prev => {
-      return {
-        ...prev,
-        ...initialValues
-      }
-    })
-    // eslint-disable-next-line
-  }, [isSelected, shapeProps]);
+  }, [isSelected]);
 
   const onMouseOver = (e) => {
     // groupRef.current.findOne(Layer).children[0].cache();
@@ -126,6 +119,7 @@ const App = ({ shapeProps, isSelected, onSelect, onChange }) => {
   return (
     <React.Fragment>
       <Group
+        stroke="red"
         onClick={onSelect}
         ref={shapeRef}
         {...shapeProps}
@@ -155,59 +149,58 @@ const App = ({ shapeProps, isSelected, onSelect, onChange }) => {
         onDragStart={onMouseOut}
       // ref={groupRef}
       >
-        <Group >
-          {chartDetails.dataSet.map((rect, idx) => (
-            <Rectangle
-              graphHeight={chartDetails.graphHeight}
-              padding={chartDetails.padding}
-              xScale={chartDetails.xScale}
-              yScale={chartDetails.yScale}
-              onMouseOver={onMouseOver}
-              onMouseOut={onMouseOut}
-              item={rect}
-              i={idx}
-              key={idx}
-            />
-          ))}
-          <Arrow
-            x={chartDetails.line.x}
-            y={chartDetails.line.y}
-            points={chartDetails.horiArrow.linePoints}
-            stroke={chartDetails.line.stroke}
+        {chartDetails.dataSet.map((rect, idx) => (
+          <Rectangle
+            graphHeight={chartDetails.graphHeight}
+            padding={chartDetails.padding}
+            xScale={xScale}
+            yScale={yScale}
+            onMouseOver={onMouseOver}
+            onMouseOut={onMouseOut}
+            item={rect}
+            i={idx}
+            key={idx}
           />
-          <Arrow
-            x={chartDetails.line.x}
-            y={chartDetails.line.y}
-            points={chartDetails.vertArrow.linePoints}
-            stroke={chartDetails.line.stroke}
+        ))}
+        <Arrow
+          x={chartDetails.line.x}
+          y={chartDetails.line.y}
+          points={chartDetails.horiArrow.linePoints}
+          stroke={chartDetails.line.stroke}
+        />
+        <Arrow
+          x={chartDetails.line.x}
+          y={chartDetails.line.y}
+          points={chartDetails.vertArrow.linePoints}
+          stroke={chartDetails.line.stroke}
+        />
+        <Text
+          text={chartDetails.horiArrow.desc}
+          fontSize={chartDetails.horiArrow.fontSize}
+          x={chartDetails.horiArrow.xAxis}
+          y={chartDetails.horiArrow.yAxis}
+          rotation={chartDetails.horiArrow.direction}
+        />
+        <Text
+          text={chartDetails.vertArrow.desc}
+          fontSize={chartDetails.vertArrow.fontSize}
+          x={chartDetails.vertArrow.xAxis}
+          y={chartDetails.vertArrow.yAxis}
+        />
+        {chartDetails.dataSet.map((rect, idx) => (
+          <ScaleValues
+            key={idx}
+            i={idx}
+            graphWidth={chartDetails.graphWidth}
+            graphHeight={chartDetails.graphHeight}
+            dataSet={chartDetails.dataSet}
+            topValue={chartDetails.topValue}
+            padding={chartDetails.padding}
+            months={chartDetails.horiArrow.label}
+            xScale={chartDetails.xScale}
           />
-          <Text
-            text={chartDetails.graphHeight > 150 ? chartDetails.horiArrow.desc : null}
-            fontSize={chartDetails.horiArrow.fontSize}
-            x={chartDetails.horiArrow.xAxis}
-            y={chartDetails.horiArrow.yAxis}
-            rotation={chartDetails.horiArrow.direction}
-          />
-          <Text
-            text={chartDetails.graphWidth > 150 ? chartDetails.vertArrow.desc : null}
-            fontSize={chartDetails.vertArrow.fontSize}
-            x={chartDetails.vertArrow.xAxis}
-            y={chartDetails.vertArrow.yAxis}
-          />
-          {chartDetails.dataSet.map((rect, idx) => (
-            <ScaleValues
-              key={idx}
-              i={idx}
-              graphWidth={chartDetails.graphWidth}
-              graphHeight={chartDetails.graphHeight}
-              dataSet={chartDetails.dataSet}
-              topValue={chartDetails.topValue}
-              padding={chartDetails.padding}
-              months={chartDetails.horiArrow.label}
-              xScale={chartDetails.xScale}
-            />
-          ))}
-        </Group>
+        ))}
+
 
 
         {/* ---------------  Tooltip Group  --------------- */}

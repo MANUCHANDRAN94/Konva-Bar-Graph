@@ -57,7 +57,7 @@ const App = ({ shapeProps, isSelected, onSelect, onChange }) => {
     horiArrow: {
       linePoints: [0, 0, graphWidth - padding / 4, 0],
       desc: "Expenditure per month  --->",
-      fontSize: graphHeight > 300 ? 13 : 10,
+      fontSize: graphHeight > 300 ? 15 : 12,
       xAxis: 0,
       yAxis: graphWidth > 300 ? graphHeight / 1.7 : graphHeight / 1.3,
       direction: -90,
@@ -84,8 +84,10 @@ const App = ({ shapeProps, isSelected, onSelect, onChange }) => {
 
   useEffect(() => {
     if (isSelected) {
-      trRef.current.setNode(shapeRef.current);
-      trRef.current.getLayer().batchDraw();
+      for (let i = 0; i < 2; i++) {
+        trRef.current.setNode(shapeRef.current);
+        trRef.current.getLayer().batchDraw();
+      }
     }
     setChartDetails(prev => {
       return {
@@ -93,7 +95,6 @@ const App = ({ shapeProps, isSelected, onSelect, onChange }) => {
         ...initialValues
       }
     })
-    // eslint-disable-next-line
   }, [isSelected, shapeProps]);
 
   const onMouseOver = (e) => {
@@ -182,14 +183,14 @@ const App = ({ shapeProps, isSelected, onSelect, onChange }) => {
             stroke={chartDetails.line.stroke}
           />
           <Text
-            text={chartDetails.graphHeight > 150 ? chartDetails.horiArrow.desc : null}
+            text={chartDetails.graphHeight > 100 ? chartDetails.horiArrow.desc : null}
             fontSize={chartDetails.horiArrow.fontSize}
             x={chartDetails.horiArrow.xAxis}
             y={chartDetails.horiArrow.yAxis}
             rotation={chartDetails.horiArrow.direction}
           />
           <Text
-            text={chartDetails.graphWidth > 150 ? chartDetails.vertArrow.desc : null}
+            text={chartDetails.graphWidth > 100 ? chartDetails.vertArrow.desc : null}
             fontSize={chartDetails.vertArrow.fontSize}
             x={chartDetails.vertArrow.xAxis}
             y={chartDetails.vertArrow.yAxis}

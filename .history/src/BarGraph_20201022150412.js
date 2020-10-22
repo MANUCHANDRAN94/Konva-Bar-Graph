@@ -7,7 +7,7 @@ import Tooltip from "./components/Tooltip";
 const App = ({ shapeProps, isSelected, onSelect, onChange }) => {
   // ! These values should be passed as props
   /* -------------------------------------------------------------------------- */
-  let inputs = [12, 13, 8, 30, 20, 28];
+  let inputs = [12, 13, 8, 30, 11, 23, 35, 13, 9, 17, 20, 28];
   let months = [
     "jan",
     "feb",
@@ -57,7 +57,7 @@ const App = ({ shapeProps, isSelected, onSelect, onChange }) => {
     horiArrow: {
       linePoints: [0, 0, graphWidth - padding / 4, 0],
       desc: "Expenditure per month  --->",
-      fontSize: graphHeight > 300 ? 13 : 10,
+      fontSize: graphHeight > 300 ? 15 : 12,
       xAxis: 0,
       yAxis: graphWidth > 300 ? graphHeight / 1.7 : graphHeight / 1.3,
       direction: -90,
@@ -90,11 +90,39 @@ const App = ({ shapeProps, isSelected, onSelect, onChange }) => {
     setChartDetails(prev => {
       return {
         ...prev,
-        ...initialValues
+        graphWidth,
+        graphHeight,
+        padding,
+        xScale,
+        yScale,
+        backgroundColor: "yellow",
+        line: {
+          x: padding + 20,
+          y: graphHeight - padding,
+          stroke: "black",
+        },
+        vertArrow: {
+          linePoints: [0, 0, 0, -topValue * yScale - padding],
+          desc: "Months of a year --->",
+          fontSize: graphWidth > 300 ? 15 : 12,
+          xAxis: graphWidth / 3,
+          yAxis: graphHeight,
+          label: null,
+        },
+        horiArrow: {
+          linePoints: [0, 0, graphWidth - padding / 4, 0],
+          desc: "Expenditure per month  --->",
+          fontSize: graphHeight > 300 ? 15 : 12,
+          xAxis: 0,
+          yAxis: graphWidth > 300 ? graphHeight / 1.7 : graphHeight / 1.3,
+          direction: -90,
+          label: months,
+        },
+        dataSet: inputs,
+        topValue,
       }
     })
-    // eslint-disable-next-line
-  }, [isSelected, shapeProps]);
+  }, [isSelected, shapeProps, xScale, yScale, padding]);
 
   const onMouseOver = (e) => {
     // groupRef.current.findOne(Layer).children[0].cache();
@@ -182,7 +210,7 @@ const App = ({ shapeProps, isSelected, onSelect, onChange }) => {
             stroke={chartDetails.line.stroke}
           />
           <Text
-            text={chartDetails.graphHeight > 150 ? chartDetails.horiArrow.desc : null}
+            text={chartDetails.horiArrow.desc}
             fontSize={chartDetails.horiArrow.fontSize}
             x={chartDetails.horiArrow.xAxis}
             y={chartDetails.horiArrow.yAxis}

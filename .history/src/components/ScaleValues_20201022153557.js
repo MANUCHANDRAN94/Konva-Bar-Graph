@@ -33,7 +33,7 @@ const ScaleValues = ({
                     15 -
                     i * ((graphHeight - padding) / dataSet.length)
                 }
-                visible={dataSet.length < 5 || graphWidth > 100}
+                visible={dataSet.length < 5 || graphWidth > 200}
             />
             <Text
                 key={-i - dataSet.length}
@@ -41,7 +41,7 @@ const ScaleValues = ({
                 fontSize={graphWidth > 300 ? 15 : 10}
                 x={30 + padding + i * xScale}
                 y={graphHeight - padding / 1.1}
-                visible={dataSet.length < 5 || graphWidth > 100}
+                visible={dataSet.length < 5 || graphWidth > 150}
             />
         </Fragment>
     );

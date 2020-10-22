@@ -189,7 +189,7 @@ const App = ({ shapeProps, isSelected, onSelect, onChange }) => {
             rotation={chartDetails.horiArrow.direction}
           />
           <Text
-            text={chartDetails.graphWidth > 150 ? chartDetails.vertArrow.desc : null}
+            text={chartDetails.graphWidth > 100 ? chartDetails.vertArrow.desc : null}
             fontSize={chartDetails.vertArrow.fontSize}
             x={chartDetails.vertArrow.xAxis}
             y={chartDetails.vertArrow.yAxis}

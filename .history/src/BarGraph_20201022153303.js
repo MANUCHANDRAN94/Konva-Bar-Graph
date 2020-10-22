@@ -182,14 +182,14 @@ const App = ({ shapeProps, isSelected, onSelect, onChange }) => {
             stroke={chartDetails.line.stroke}
           />
           <Text
-            text={chartDetails.graphHeight > 150 ? chartDetails.horiArrow.desc : null}
+            text={chartDetails.graphHeight > 100 ? chartDetails.horiArrow.desc : null}
             fontSize={chartDetails.horiArrow.fontSize}
             x={chartDetails.horiArrow.xAxis}
             y={chartDetails.horiArrow.yAxis}
             rotation={chartDetails.horiArrow.direction}
           />
           <Text
-            text={chartDetails.graphWidth > 150 ? chartDetails.vertArrow.desc : null}
+            text={chartDetails.graphWidth > 100 ? chartDetails.vertArrow.desc : null}
             fontSize={chartDetails.vertArrow.fontSize}
             x={chartDetails.vertArrow.xAxis}
             y={chartDetails.vertArrow.yAxis}

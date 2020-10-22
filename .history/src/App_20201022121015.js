@@ -8,11 +8,11 @@ const initialGraph = [
         y: 100,
         width: 300,
         height: 200,
-        id: "bar0"
+        id: "bar1"
     },
     {
         x: 200,
-        y: 400,
+        y: 300,
         width: 200,
         height: 200,
         id: "bar1"
