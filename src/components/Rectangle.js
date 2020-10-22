@@ -1,15 +1,21 @@
-import React from 'react';
-import { Rect, Text } from 'react-konva';
+import React, { useEffect } from 'react';
+import { Rect } from 'react-konva';
 
 
-const Rectangle = ({ graphWidth, graphHeight, padding, topValue,
-    xScale, yScale, inputs, months, onMouseOver, onMouseOut }) => {
+const Rectangle = ({ item, i, graphHeight, padding,
+    xScale, yScale, onMouseOver, onMouseOut }) => {
 
     console.log("rectangle printed");
 
+    /* --------------------------------- Methods -------------------------------- */
+    useEffect(() => {
+
+    }, [item, graphHeight])
+    /* -------------------------------------------------------------------------- */
+
+
     return (
-        inputs.map((item, i) => [<Rect
-            key={i}
+        <Rect
             name={i.toString()}
             x={padding + 30 + i * xScale}
             y={graphHeight - padding - item * yScale * .8}
@@ -20,8 +26,7 @@ const Rectangle = ({ graphWidth, graphHeight, padding, topValue,
             onMouseOver={(e) => onMouseOver(e)}
             onMouseOut={(e) => onMouseOut(e)}
 
-        />, <Text key={-i - 1} text={i < inputs.length ? i * Math.ceil(Math.ceil(topValue / 10) * 12 / Math.floor(inputs.length)) : null} fontSize={graphHeight > 300 ? 15 : 10} x={padding} y={graphHeight - padding - 15 - i * ((graphHeight - padding) / (inputs.length))} visible={inputs.length < 5 || graphWidth > 200} />,
-        <Text key={-i - inputs.length} text={months[i]} fontSize={graphWidth > 300 ? 15 : 10} x={30 + padding + i * xScale} y={graphHeight - padding / 1.1} visible={inputs.length < 5 || graphWidth > 200} />])
+        />
 
     )
 }

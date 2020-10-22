@@ -1,17 +1,14 @@
-import React from 'react';
-import { Rect, Text, Group } from 'react-konva';
-
+import React from "react";
+import { Rect, Text, Group } from "react-konva";
 
 const Tooltip = ({ x, y, msg }) => {
     return (
-        <Group
-            x={x - 50}
-            y={y - 50}>
+        <Group x={x - 50} y={y - 50}>
             <Rect
                 width={100}
                 height={50}
-                fill="yellow"
-                stroke="black"
+                fill='yellow'
+                stroke='black'
                 strokeWidth={3}
             />
             <Text
@@ -20,11 +17,11 @@ const Tooltip = ({ x, y, msg }) => {
                 width={100}
                 text={msg}
                 fontSize={14}
-                stroke="black"
+                stroke='black'
                 strokeWidth={1}
             />
         </Group>
-    )
-}
+    );
+};
 
-export default Tooltip
+export default Tooltip;
