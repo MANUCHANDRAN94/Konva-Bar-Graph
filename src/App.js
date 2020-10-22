@@ -7,7 +7,14 @@ const initialGraph = [
         x: 100,
         y: 100,
         width: 300,
-        height: 300,
+        height: 200,
+        id: "bar1"
+    },
+    {
+        x: 200,
+        y: 200,
+        width: 200,
+        height: 200,
         id: "bar1"
     }
 ];
@@ -16,6 +23,16 @@ const initialGraph = [
 const App = () => {
     const [bars, setBars] = useState(initialGraph);
     const [selectedId, selectShape] = useState(null);
+
+    const onClick = e => {
+        setBars(prev => [...prev, {
+            x: Math.random() * window.innerWidth / 2,
+            y: Math.random() * window.innerHeight / 2,
+            width: Math.random() * 500,
+            height: Math.random() * 400,
+            id: `bar${prev.length}`
+        }])
+    }
     return (
         <Stage width={window.innerWidth} height={window.innerHeight}
             onMouseDown={e => {
@@ -28,7 +45,7 @@ const App = () => {
                 <Text x={window.innerWidth / 3} y={10} text="Graph Canvas" fontSize={26} stroke="black" />
                 <Group x={window.innerWidth - 120} y={window.innerHeight / 3} >
                     <Rect height={100} width={120} fill="red" />
-                    <Text text="BAR" fontSize={20} stroke="black" height={100} width={120} align="center" verticalAlign="middle" />
+                    <Text text="BAR" fontSize={20} stroke="black" height={100} width={120} align="center" verticalAlign="middle" onClick={onClick} />
                 </Group>
                 {bars.map((bar, i) => {
                     return (
@@ -47,7 +64,7 @@ const App = () => {
                         />
                     );
                 })}
-                <BarGraph />
+                {/* <BarGraph /> */}
             </Layer>
         </Stage>
     )
