@@ -13,7 +13,7 @@ const App = () => {
   let xScale = (graphWidth - 2 * padding) / inputs.length;
   let yScale = (graphHeight - 2 * padding) / Math.floor(topValue);
 
-  let stageRef = useRef();
+  let groupRef = useRef();
 
   let initialValues = {
     graphCoordX: 0,
@@ -58,15 +58,15 @@ const App = () => {
 
 
   const onMouseOver = (e) => {
-    stageRef.current.findOne(Layer).children[0].cache();
-    // console.log(stageRef.current.findOne(Layer).children[0]);
+    // groupRef.current.findOne(Layer).children[0].cache();
+    // console.log(groupRef.current.getStage().getPointerPosition().x);
     setChartDetails(prev => {
       return {
         ...prev,
         toolTip: {
           active: true,
-          x: stageRef.current.getPointerPosition().x,
-          y: stageRef.current.getPointerPosition().y,
+          x: groupRef.current.getStage().getPointerPosition().x,
+          y: groupRef.current.getStage().getPointerPosition().y,
           msg: `Month: ${months[e.target.name()]} \n Value:${inputs[e.target.name()]}`
         }
       }
@@ -88,9 +88,9 @@ const App = () => {
   }
 
   return (
-    <Stage width={window.innerWidth} height={window.innerHeight} ref={stageRef} >
-      <Layer class="graphLayer">
-        <Group draggable height={chartDetails.graphHeight} width={chartDetails.graphWidth} x={chartDetails.graphCoordX} y={chartDetails.graphCoordY} onDragStart={onMouseOut}>
+    <Stage width={window.innerWidth} height={window.innerHeight}  >
+      <Layer>
+        <Group draggable height={chartDetails.graphHeight} width={chartDetails.graphWidth} x={chartDetails.graphCoordX} y={chartDetails.graphCoordY} onDragStart={onMouseOut} ref={groupRef}>
           <Rectangle graphWidth={chartDetails.graphWidth} graphHeight={chartDetails.graphHeight}
             padding={chartDetails.padding} inputs={chartDetails.dataSet} topValue={topValue} xScale={xScale} yScale={yScale}
             months={chartDetails.horiArrow.label} onMouseOver={onMouseOver}
